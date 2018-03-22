@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Module-6-js</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let keyTrainer = {
+        chars: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v',
+         'b', 'n', 'm'],
+        charCount: '',
+        setCharCount: function () {
+           let numb = parseInt(prompt('Set number of symbols'));
+           if (isNaN(numb)) {
+             return;
+           }else{
+             keyTrainer.checkPositiveInteger(numb);
+           }
+        },
+        checkPositiveInteger: function (char) {
+           while(isNaN(char) || char < 0 || char > keyTrainer.chars.length){
+             return keyTrainer.setCharCount();
+           }
+           keyTrainer.charCount = char;
+           return;
+        },
+        task: [],
+        createTask: function () {
+          const arrayLength = keyTrainer.charCount;
+          const array = keyTrainer.chars;
+          keyTrainer.task = Array.from({length: arrayLength}, () => array[Math.floor(Math.random() * array.length)]);
+        },
+        startTask: function () {
+          const arrayJoin = keyTrainer.task.join('');
+          const inputText = prompt(`Write the same word: ${arrayJoin}`);
+          const arrayTask = keyTrainer.task;
+          let errors = 0;
+          if (inputText.length < arrayJoin.length){
+            errors = arrayJoin.length - inputText.length;
+          }else if (inputText.length > arrayJoin.length) {
+            errors = inputText.length - arrayJoin.length;
+          }
+          keyTrainer.userInput = inputText;
+          for (let i = 0; i < inputText.length; i++){
+            let leter = inputText.charAt(i);
+            if(arrayTask.includes(leter) === false){
+              errors = errors + 1;
+            }
+          }
+          keyTrainer.userErrors = errors;
+          if (errors === 0){
+            console.log('Congrats!');
+          }else if (errors > 0) {
+            console.log(`You have ${errors} misstake, wish you success in the next exercise`);
+          }
+        },
+        userErrors: 0,
+        userInput: '',
+        run: function () {
+          keyTrainer.setCharCount();
+          keyTrainer.createTask();
+          keyTrainer.startTask();
+        }
+      }
+      keyTrainer.run();
+    </script>
+  </body>
+</html>
